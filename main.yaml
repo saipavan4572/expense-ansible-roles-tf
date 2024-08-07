@@ -4,7 +4,7 @@
   hosts: localhost
   connection: local
   vars_files:
-  - "variables-{{ environment }}.yaml"    ## ex:- variables-dev.yaml
+  - "variables-{{ env }}.yaml"    ## ex:- variables-dev.yaml
   become: yes
   roles:
   - "{{ component }}"
