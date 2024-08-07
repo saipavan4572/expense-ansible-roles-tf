@@ -1,0 +1,10 @@
+### changes done for terraform --> expense-infra-dev
+
+- name: "configure {{ component }} server"
+  hosts: localhost
+  connection: local
+  vars_files:
+  - "variables-{{ environment }}.yaml"    ## ex:- variables-dev.yaml
+  become: yes
+  roles:
+  - "{{ component }}"
