@@ -34,6 +34,8 @@
 #     remote_src: yes       # with remote_src: yes -> informing server .zip file already in remote-server
 
 - name: run app pre-requisites
+  tags:
+  - deployment
   ansible.builtin.import_role:
     name: common      #name of the role created.
     tasks_from: app-pre-req     #name of the yaml file in common role - app-pre-req.yaml
@@ -48,12 +50,22 @@
     src: backend.service.j2
     dest: /etc/systemd/system/backend.service
 
+- name: daemon reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Enable backend service
+  ansible.builtin.service:
+    name: backend
+    enabled: yes
+
 - name: install python mysql dependencies
   ansible.builtin.pip:
     name: 
     - PyMySQL
     - cryptography    # to use the password in the commandline we need to install cryptography as well
     executable: pip3.9    #since python version installed is 3.9.18 use --> pip3.9
+
 - name: import data into MySQL
   community.mysql.mysql_db:
     login_host: "{{ login_host }}"
@@ -63,12 +75,9 @@
     state: import               ## if state is dump/import we must provide name=all - to dump all data.
     name: all
 
-- name: daemon reload
-  ansible.builtin.systemd_service:
-    daemon_reload: true
-
 - name: start and enable backend service
+  tags: 
+  - deployment
   ansible.builtin.service:
     name: backend
-    state: started
-    enabled: yes
+    state: restarted
