@@ -16,23 +16,6 @@
   ansible.builtin.user:
     name: expense
 
-## if we run the script at this point it will run successfully and run again also it will run without any errors.
-
-# - name: create app directory
-#   ansible.builtin.file:
-#     path: /app
-#     state: directory        # state: directory --> then it will create directory, default it will create file
-# - name: download backend code
-#   ansible.builtin.get_url:
-#     url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-#     dest: /tmp/backend.zip
-
-# - name: unzip backend code
-#   ansible.builtin.unarchive:
-#     src: /tmp/backend.zip   # by default it will checks in ansible server
-#     dest: /app
-#     remote_src: yes       # with remote_src: yes -> informing server .zip file already in remote-server
-
 - name: run app pre-requisites
   tags:
   - deployment

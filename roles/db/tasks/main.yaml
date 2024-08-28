@@ -22,6 +22,7 @@
     login_host: "{{ login_host }}"
     login_user: root
     login_password: "{{ mysql_root_password }}"
+    filter: version
   ignore_errors: yes      # ignoring the errors when we run it for the first time because password is not setup
   register: mysql_connection_output   # to get the result of the command/task executed into variable
 
