@@ -23,10 +23,11 @@
     name: common      #name of the role created.
     tasks_from: app-pre-req     #name of the yaml file in common role - app-pre-req.yaml
 
-- name: install npm dependencies
-  ansible.builtin.command: npm install
-  args:
-    chdir: /app       # we are informing to ansible to run the command inside /app path.
+# this installing dependencies is not required because we are downloading the artifact from nexus.
+# - name: install npm dependencies
+#   ansible.builtin.command: npm install
+#   args:
+#     chdir: /app       # we are informing to ansible to run the command inside /app path.
 
 - name: copy backend service
   ansible.builtin.template:
